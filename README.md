@@ -265,7 +265,7 @@ A simple distributed application running across multiple Docker containers.
   
   # Make changes to the Kubernetes manifest file(s)
   # For example, let's say you want to change the image tag in a deployment.yaml file
-  sed -i "s|image:.*|image: cicdapprepo/$2:$3|g" k8s-specifications/$1-deployment.yaml
+  sed -i "s|image:.*|image: [Azure-container-repo].azurecr.io/$2:$3|g" k8s-specifications/$1-deployment.yaml
   
   # Add the modified files
   git add .
@@ -278,7 +278,20 @@ A simple distributed application running across multiple Docker containers.
   
   # Cleanup: remove the temporary directory
   rm -rf /tmp/temp_repo
+  ```
 
+- Update new stage `update` for `vote-service` pipeline
 
+  ```yaml
+  - stage: Update
+    displayName: Update 
+    jobs:
+    - job: Update
+      displayName: Update
+      steps:
+      - task: ShellScript@2
+        inputs:
+          scriptPath: 'scripts/updateK8sManifests.sh'
+          args: 'vote $(imageRepository) $(tag)'
   ```
   
