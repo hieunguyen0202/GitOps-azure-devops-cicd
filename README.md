@@ -189,5 +189,25 @@ A simple distributed application running across multiple Docker containers.
   ```
   echo [password] | base64 --decode
   ```
+- Expose End-point for ArgoCD, list service
+
+  ```
+  kubectl get svc -n argocd
+  ```
+
+- Edit change to `NodePort` for `argocd-server`
+  ```
+  kubectl edit svc argocd-server -n argocd
+  ```
+
+- Rememeber this port
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/9b48205e-c9d5-4b8f-8ed4-ddcd6f5c2a49)
+
+- To get external IP for node
+
+  ```
+  kubectl get nodes -o wide
+  ```
 #### Configure ArgoCD
 
