@@ -161,6 +161,12 @@ A simple distributed application running across multiple Docker containers.
   gcloud container clusters get-credentials CLUSTER_NAME --region=CLUSTER_REGION
   ```
 #### Setup ArgoCD on Kubernetes Cluster with namespace argocd
+- Refer this [doc](https://argo-cd.readthedocs.io/en/stable/getting_started/) to download ArgoCD
+- Do this command
 
+  ```
+  kubectl create namespace argocd
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  ```
 #### Configure ArgoCD
 
