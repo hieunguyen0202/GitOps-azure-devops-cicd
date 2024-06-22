@@ -229,3 +229,22 @@ A simple distributed application running across multiple Docker containers.
 - Make sure connection is success
 
   ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/cb57a0b3-5756-4af1-b419-22991965ae7e)
+
+#### Deploy workload on Kubernetes cluster
+- Check that manifets file in Azure repo
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/cb5456f2-bb1d-4b70-b882-f3c0fb896eda)
+
+- Create new application, go to `Applications` -> Click on `New App`
+- With `Application Name`, type `voteapp-service`, project name `default`
+- make sure `Sync policy` set to `Automatic`
+- Sleect soruce repo link and specify this folder path `k8s-specifications`
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/ba259e69-a696-4cb9-b4df-5ab797a6f29b)
+
+- Select your Kubernetes cluster with namespace `default`
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/ab58e62f-9ba1-4c0f-b403-690943d801c8)
+
+
+  
