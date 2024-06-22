@@ -382,4 +382,41 @@ A simple distributed application running across multiple Docker containers.
     --docker-username=cicdapprepo \
     --docker-password=3AA9/vwi3cjJkPnAchu8nJVRuJJKiEsKOATs81LUfH+ACRBebRJI0
   ```
-  
+
+#### Expose vote service to access application
+- Run this command to find external IP
+
+  ```
+  kubectl get nodes -o wide
+  ```
+
+- Run this command to find `Port` of vote service
+
+  ```
+  kubectl get svc
+  ```
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/2488f025-2683-4443-8c97-83d19435f5a7)
+
+> Make sure to allow port 31000 in firewall rule
+
+### Test application
+- Make change in repo to `snow` and `sunny`
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/12a72666-360c-4ed9-9c7a-a9424ada8284)
+
+- The pipeline will run automatically
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/5f339254-45e9-4556-b03d-54ccae203147)
+
+- Check that new image update with lastest ID build
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/2e8d1fa4-64ef-4c2f-b3f8-4f73fe5e6d72)
+
+- Go to ArgoCD check that new pod update
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/30857ee9-0b6d-4ae1-a87e-1fe79f64b4d0)
+
+- Go back to application to verify the result
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/62369859-5be7-427a-9e6a-a03450a1f16e)
