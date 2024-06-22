@@ -209,5 +209,6 @@ A simple distributed application running across multiple Docker containers.
   ```
   kubectl get nodes -o wide
   ```
+> To access ArgoCD app, you need to allow port in bound rule 
 #### Configure ArgoCD
 
