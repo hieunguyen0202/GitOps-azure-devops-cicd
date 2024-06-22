@@ -321,4 +321,29 @@ A simple distributed application running across multiple Docker containers.
           ./scripts/updateK8sManifests.sh vote $(imageRepository) $(tag)
         displayName: Run updateK8sManifests.sh
   ```
+- Run the pipeline and check the result
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/7b872870-d3b2-4261-b070-61b1cfc4d455)
+
+- Go to this file for check new image update
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/dff9d945-fda8-4e2b-a7a1-21bfb0a9cbb9)
+
+- You can go back gitops application to check new update for image
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/cfbc811d-9d38-4920-b843-e8eb955ac05a)
+
+#### Modify the Application Reconciliation Timeout in Argo CD
+- Run this command
+
+  ```
+  # kubectl describe configmaps argocd-cm -n argocd
+  kubectl edit cm argocd-cm -n argocd
+  ```
+- Add this at the end of the file
+
+  ```
+  data:
+    timeout.reconciliation: 10s
+  ```
   
