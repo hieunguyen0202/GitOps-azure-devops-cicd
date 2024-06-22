@@ -347,3 +347,22 @@ A simple distributed application running across multiple Docker containers.
     timeout.reconciliation: 10s
   ```
   
+#### Fix error for ImagePullBackOff permission pull image from private container registry
+- You will see the problem like this
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/ffeecf7c-9f06-4308-9189-9a64ad9aa556)
+
+- Go to Container Reigistry to get crenditail
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/bf4feb8d-18b6-4572-b4ca-d6663eb8683c)
+
+- Command to create ACR ImagePullSecret
+
+  ```
+  kubectl create secret docker-registry <secret-name> \
+    --namespace <namespace> \
+    --docker-server=<container-registry-name>.azurecr.io \
+    --docker-username=<service-principal-ID> \
+    --docker-password=<service-principal-password>
+  ```
+- I had username `cicdapprepo` and password `3AA9/vwi3cjJkPnAchu8nJVRuJJKiEsKOATs81LUfH+ACRBebRJI0`
