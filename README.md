@@ -168,5 +168,26 @@ A simple distributed application running across multiple Docker containers.
   kubectl create namespace argocd
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
   ```
+- Check status of pod
+
+  ```
+  kubectl get pods -n argocd
+  ```
+- Get password of argoCD, to list secrets
+
+  ```
+  kubectl get secrets -n argocd
+  ```
+- To show password
+  ```
+  kubectl get secrets argocd-initial-admin-secret -n argocd -o yaml
+  ```
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/62c44333-e5f1-45d9-913c-5bdd65017090)
+
+- To decode this password
+
+  ```
+  echo [password] | base64 --decode
+  ```
 #### Configure ArgoCD
 
