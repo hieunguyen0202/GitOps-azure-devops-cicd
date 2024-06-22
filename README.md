@@ -295,30 +295,30 @@ A simple distributed application running across multiple Docker containers.
 - Update new stage `update` for `vote-service` pipeline
 
   ```yaml
-- stage: Update
-  displayName: Update 
-  jobs:
-  - job: Update
-    displayName: Update
-    steps:
-    - script: |
-        if command -v apt-get >/dev/null; then
-            sudo apt-get update && sudo apt-get install -y dos2unix
-        elif command -v yum >/dev/null; then
-            sudo yum install -y epel-release && sudo yum install -y dos2unix
-        else
-            echo "Neither apt-get nor yum found. Please install dos2unix manually."
-            exit 1
-        fi
-
-        # Convert the script to Unix format
-        dos2unix scripts/updateK8sManifests.sh
-
-        # Make the script executable
-        chmod +x scripts/updateK8sManifests.sh
-
-        # Run the script with arguments
-        ./scripts/updateK8sManifests.sh vote $(imageRepository) $(tag)
-      displayName: Run updateK8sManifests.sh
+  - stage: Update
+    displayName: Update 
+    jobs:
+    - job: Update
+      displayName: Update
+      steps:
+      - script: |
+          if command -v apt-get >/dev/null; then
+              sudo apt-get update && sudo apt-get install -y dos2unix
+          elif command -v yum >/dev/null; then
+              sudo yum install -y epel-release && sudo yum install -y dos2unix
+          else
+              echo "Neither apt-get nor yum found. Please install dos2unix manually."
+              exit 1
+          fi
+  
+          # Convert the script to Unix format
+          dos2unix scripts/updateK8sManifests.sh
+  
+          # Make the script executable
+          chmod +x scripts/updateK8sManifests.sh
+  
+          # Run the script with arguments
+          ./scripts/updateK8sManifests.sh vote $(imageRepository) $(tag)
+        displayName: Run updateK8sManifests.sh
   ```
   
