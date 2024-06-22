@@ -251,24 +251,35 @@ A simple distributed application running across multiple Docker containers.
 
   ```bash
   #!/bin/bash
-
-  set -x
+  set -e  # Exit on any error
+  set -x  # Print each command being executed
   
   # Set the repository URL
-  REPO_URL="https://[azure_token]@dev.azure.com/hieukato321/test-DevOps/_git/test-DevOps"
+  REPO_URL="https://[azuredevops_token]@dev.azure.com/hieukato321/test-DevOps/_git/test-DevOps"
   
   # Clone the git repository into the /tmp directory
-  git clone "$REPO_URL" /tmp/temp_repo
+  TEMP_DIR="/tmp/temp_repo"
+  TEMP_DIR="${TEMP_DIR%$'\r'}"  # Remove any trailing \r character
+  
+  if [ -d "$TEMP_DIR" ]; then
+      rm -rf "$TEMP_DIR"
+  fi
+  
+  git clone "$REPO_URL" "$TEMP_DIR"
   
   # Navigate into the cloned repository directory
-  cd /tmp/temp_repo
+  cd "$TEMP_DIR"
   
   # Make changes to the Kubernetes manifest file(s)
-  # For example, let's say you want to change the image tag in a deployment.yaml file
-  sed -i "s|image:.*|image: [Azure-container-repo].azurecr.io/$2:$3|g" k8s-specifications/$1-deployment.yaml
+  # Example: Update image tag in a deployment.yaml file
+  sed -i "s|image:.*|image: cicdapprepo.azurecr.io/$2:$3|g" k8s-specifications/$1-deployment.yaml
   
   # Add the modified files
   git add .
+  
+  # Configure Git user
+  git config --global user.email "user@example.com"
+  git config --global user.name "user"
   
   # Commit the changes
   git commit -m "Update Kubernetes manifest"
@@ -277,21 +288,37 @@ A simple distributed application running across multiple Docker containers.
   git push
   
   # Cleanup: remove the temporary directory
-  rm -rf /tmp/temp_repo
+  rm -rf "$TEMP_DIR"
+
   ```
 
 - Update new stage `update` for `vote-service` pipeline
 
   ```yaml
-  - stage: Update
-    displayName: Update 
-    jobs:
-    - job: Update
-      displayName: Update
-      steps:
-      - task: ShellScript@2
-        inputs:
-          scriptPath: 'scripts/updateK8sManifests.sh'
-          args: 'vote $(imageRepository) $(tag)'
+- stage: Update
+  displayName: Update 
+  jobs:
+  - job: Update
+    displayName: Update
+    steps:
+    - script: |
+        if command -v apt-get >/dev/null; then
+            sudo apt-get update && sudo apt-get install -y dos2unix
+        elif command -v yum >/dev/null; then
+            sudo yum install -y epel-release && sudo yum install -y dos2unix
+        else
+            echo "Neither apt-get nor yum found. Please install dos2unix manually."
+            exit 1
+        fi
+
+        # Convert the script to Unix format
+        dos2unix scripts/updateK8sManifests.sh
+
+        # Make the script executable
+        chmod +x scripts/updateK8sManifests.sh
+
+        # Run the script with arguments
+        ./scripts/updateK8sManifests.sh vote $(imageRepository) $(tag)
+      displayName: Run updateK8sManifests.sh
   ```
   
