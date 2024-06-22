@@ -211,4 +211,21 @@ A simple distributed application running across multiple Docker containers.
   ```
 > To access ArgoCD app, you need to allow port in bound rule 
 #### Configure ArgoCD
+- Login with username `admin` and password in previous step
+- Connect to repo, go to `Settings` -> Choose `Repositories` -> Click on `Connect Repo`
 
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/ee654476-7bc9-4139-a2cf-a28b40dc9615)
+
+- You need to create token from Azure DevOps and specify this URL https repo like this
+
+  ```
+  https://[token-devops-azure]@dev.azure.com/hieukato321/test-DevOps/_git/test-DevOps
+  ```
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/f4b6ed88-19a8-4de2-b3d4-d384d6ef7324)
+
+> Save this token in note pad
+
+- Make sure connection is success
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/cb57a0b3-5756-4af1-b419-22991965ae7e)
