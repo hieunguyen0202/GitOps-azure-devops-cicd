@@ -74,9 +74,75 @@ A simple distributed application running across multiple Docker containers.
   sudo systemctl restart docker
   ```
 
-    
 #### Create a pipeline
+- Create a pipeline for `vote-service`
 
+  ```yaml
+  # Docker
+  # Build and push an image to Azure Container Registry
+  # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+  
+  trigger:
+   paths:
+     include:
+       - vote/*
+  
+  resources:
+  - repo: self
+  
+  variables:
+    # Container registry service connection established during pipeline creation
+    dockerRegistryServiceConnection: '8b19a049-e8e2-443b-b21e-a1cbae6f9713'
+    imageRepository: 'votingapp'
+    containerRegistry: 'cicdapprepo.azurecr.io'
+    dockerfilePath: '$(Build.SourcesDirectory)/result/Dockerfile'
+    tag: '$(Build.BuildId)'
+  
+  pool:
+   name: 'azurehost'
+  
+  stages:
+  - stage: Build
+    displayName: Build 
+    jobs:
+    - job: Build
+      displayName: Build
+      steps:
+      - task: Docker@2
+        displayName: Build an image
+        inputs:
+          containerRegistry: '$(dockerRegistryServiceConnection)'
+          repository: '$(imageRepository)'
+          command: 'build'
+          Dockerfile: 'vote/Dockerfile'
+          tags: '$(tag)'
+  
+  - stage: Push
+    displayName: Push 
+    jobs:
+    - job: Push
+      displayName: Push
+      steps:
+      - task: Docker@2
+        displayName: Push an image
+        inputs:
+          containerRegistry: '$(dockerRegistryServiceConnection)'
+          repository: '$(imageRepository)'
+          command: 'push'
+          tags: '$(tag)'
+  
+  # - stage: Update
+  #   displayName: Update 
+  #   jobs:
+  #   - job: Update
+  #     displayName: Update
+  #     steps:
+  #     - task: ShellScript@2
+  #       inputs:
+  #         scriptPath: 'scripts/updateK8sManifests.sh'
+  #         args: 'vote $(imageRepository) $(tag)'  
+  ```
+- Similar pipeline for `vworker-service` and `result-service`
 
 ### Continuos Delivery
 
