@@ -145,4 +145,22 @@ A simple distributed application running across multiple Docker containers.
 - Similar pipeline for `vworker-service` and `result-service`
 
 ### Continuos Delivery
+#### Create kubernetes cluster on Azure/GCP 
+- Choose name `gitops-cluster`
+- Enable autoscaling node for min `1` and max `2`, enable for IP of pod
+
+#### Connect to Kubernetes cluster
+- For Azure Kubernetes services
+
+  ```
+  az aks get-credentials --resource-group resourcegroupname --name clustername
+  ```
+- For Google Kubernetes Engine
+
+  ```
+  gcloud container clusters get-credentials CLUSTER_NAME --region=CLUSTER_REGION
+  ```
+#### Setup ArgoCD on Kubernetes Cluster with namespace argocd
+
+#### Configure ArgoCD
 
