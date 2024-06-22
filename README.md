@@ -62,6 +62,17 @@ A simple distributed application running across multiple Docker containers.
 
     ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/bef77662-8ab2-4e78-919e-53db85aa9ac2)
 
+- Next, install docker
+
+  ```
+  sudo apt install docker.io -y
+  ```
+- Grant azureuser permission for docker
+
+  ```
+  sudo usermod -aG docker samelnguyen08
+  sudo systemctl restart docker
+  ```
 
     
 #### Create a pipeline
