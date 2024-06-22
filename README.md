@@ -377,9 +377,9 @@ A simple distributed application running across multiple Docker containers.
 
 - Run this command
   ```
-  kubectl create secret docker-registry <secret-name> \
+  kubectl create secret docker-registry acr-secret \
     --docker-server=cicdapprepo.azurecr.io \
     --docker-username=cicdapprepo \
-    --docker-password=3AA9/vwi3cjJkPnAchu8nJVRuJJKiEsKOATs81LUfH+ACRBebRJI
+    --docker-password=3AA9/vwi3cjJkPnAchu8nJVRuJJKiEsKOATs81LUfH+ACRBebRJI0
   ```
   
