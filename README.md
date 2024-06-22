@@ -246,5 +246,39 @@ A simple distributed application running across multiple Docker containers.
 
   ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/ab58e62f-9ba1-4c0f-b403-690943d801c8)
 
+#### Create script to update new image for deployment vote
+- In Azure repo, create new file updateK8sManifests.sh in `scripts` folder
 
+  ```bash
+  #!/bin/bash
+
+  set -x
+  
+  # Set the repository URL
+  REPO_URL="https://[azure_token]@dev.azure.com/hieukato321/test-DevOps/_git/test-DevOps"
+  
+  # Clone the git repository into the /tmp directory
+  git clone "$REPO_URL" /tmp/temp_repo
+  
+  # Navigate into the cloned repository directory
+  cd /tmp/temp_repo
+  
+  # Make changes to the Kubernetes manifest file(s)
+  # For example, let's say you want to change the image tag in a deployment.yaml file
+  sed -i "s|image:.*|image: cicdapprepo/$2:$3|g" k8s-specifications/$1-deployment.yaml
+  
+  # Add the modified files
+  git add .
+  
+  # Commit the changes
+  git commit -m "Update Kubernetes manifest"
+  
+  # Push the changes back to the repository
+  git push
+  
+  # Cleanup: remove the temporary directory
+  rm -rf /tmp/temp_repo
+
+
+  ```
   
