@@ -366,3 +366,20 @@ A simple distributed application running across multiple Docker containers.
     --docker-password=<service-principal-password>
   ```
 - I had username `cicdapprepo` and password `3AA9/vwi3cjJkPnAchu8nJVRuJJKiEsKOATs81LUfH+ACRBebRJI0`
+- Update new change in `vote-deployment.yaml`
+
+  ```
+  imagePullSecrets:
+      - name: acr-secret
+  ```
+
+  ![image](https://github.com/hieunguyen0202/GitOps-azure-devops-cicd/assets/98166568/0f08e422-fec8-4504-bd58-4955ea16be2d)
+
+- Run this command
+  ```
+  kubectl create secret docker-registry <secret-name> \
+    --docker-server=cicdapprepo.azurecr.io \
+    --docker-username=cicdapprepo \
+    --docker-password=3AA9/vwi3cjJkPnAchu8nJVRuJJKiEsKOATs81LUfH+ACRBebRJI
+  ```
+  
